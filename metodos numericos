@@ -1,0 +1,93 @@
+import javax.swing.SingleSelectionModel;
+
+public class Biseccion {
+
+
+	private double a;
+	private double b; 
+	private double iterador;
+
+	public Biseccion(double izq, double der, double tolerance){
+		this.a = izq;
+		this.b = der;
+		/*this.iterator = this.calculateOptimeIterator(tolerance) - 1;*/
+		this.iterador = tolerance;
+		System.out.println("Se inicia con los siguientes valores:");
+		System.out.println("a:" + this.a);
+		System.out.println("b:" + this.b);
+		System.out.println("Iteraciones: " + this.iterador);
+	}
+
+	public void aplicacionMetodo(int funcion) {
+		double c;
+		double i = 0;
+		do{
+			c = (a+b)/2.0;
+			System.out.println("Valor de c : " + c + " en la iteracion: " + i);
+
+			switch (funcion){
+
+			case 1:
+
+				if (this.funcion1(c) < 0){
+					System.out.println("Se asigna a B el valor: " + c);
+					this.b=c;	
+				}else{
+					System.out.println("Se asigna a A el valor: " + c);
+					this.a = c;
+				}
+				break;
+
+			case 2:
+
+				if (this.funcion2(c) < 0){
+					System.out.println("Se asigna a B el valor: " + c);
+					this.b = c;	
+				}else{
+					System.out.println("Se asigna a A el valor: " + c);
+					this.a = c;
+				}
+				break;
+			}
+		}while(Math.abs(this.a-this.b) > iterador);
+
+		System.out.println("La raiz es: "+c);		
+
+	}
+
+
+	private double funcion2(double a) {
+		// TODO Auto-generated method stub
+		double bis2 = (3 * (a + 1))*(a-(1/2))*(a-1);
+		System.out.println("Se calcula la funcion  3(x + 1) * (x - 1/2) * (x - 1) en: " + a);
+		System.out.println("= "+ bis2);
+		return bis2;	}
+
+	private double funcion1(double a) {
+		// TODO Auto-generated method stub
+		double bis =  Math.sqrt(a) - Math.cos(a);
+		System.out.println("Se calcula la funcion  2^(-n)*b-a<10^(-n) en:" + a);
+		System.out.println("= "+ bis);
+		return bis;
+	}
+
+	/*
+	 * Metodo que calcula el iterador adecuado
+	 * para la iteracion de la raiz
+	 */
+	private int mejorIterador(double x){
+		double temp = b - a - 0.0001;
+		double i =  Math.abs(-((Math.log(Math.pow(10, - x))) / (Math.log(temp))));
+		int result = (int)i;
+		return result;	
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Biseccion a = new Biseccion(1, 1.5, 0.000005);
+		a.funcion1(1);
+
+		Biseccion b = new Biseccion(-0.5, -2, 0.00005);
+		b.funcion2(2);
+	}
+
+}
