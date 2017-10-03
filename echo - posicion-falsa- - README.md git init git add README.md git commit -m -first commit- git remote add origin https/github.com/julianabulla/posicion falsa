@@ -1,0 +1,62 @@
+public class PosicionFalsa {
+
+		double p0,p1,i;
+		
+		
+		public PosicionFalsa(double p0, double p1, double i){
+			this.p0 = p0;
+			this.p1 = p1;
+			this.i = i;
+		}
+		
+		/**
+		 * Ejecuta el metodo de la posicion falsa.
+		 * */
+		public void aplicacionMetodo(){
+			double p = 0, error = 0;
+			int it = 2;
+			System.out.println("Se inicia con los valores: " + p0 + "; " + p1);
+			do{
+				p = (this.p1 * ( (funcion(this.p0) - (funcion(this.p1) * funcion(this.p0))) / (funcion(this.p1) - funcion(this.p0))));
+				System.out.println("p" + it + ": " + p);
+				error = errorRelativo(p, p1);
+				System.out.println("Error R: " + error);
+				
+				if ((funcion(p) * funcion(p1)) > 0){
+					this.p1 = p;
+				}else{
+					this.p0 = this.p1;
+					this.p1 = p;	
+				}
+				
+				it++;			
+			}while(error >= this.i );
+			
+			System.out.println("La raiz es: " + this.p1);
+		}
+		
+		/**
+		 * x^3 - 20
+		 * */
+		public double funcion(double x){
+			double pF = 0;
+			pF = Math.pow(x, 3) - 20;
+			System.out.println("F(" + x + ") = (" + x + ")^3 - 20 = " + pF);
+			return pF;
+		}
+		
+		
+		/**
+		 * Metodo que calcula el error relativo.
+		 * */
+		public double errorRelativo(double a, double b){
+			return Math.abs((a - b) / a);
+		}
+		
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		PosicionFalsa a = new PosicionFalsa(5, 0, 0.09);
+		a.aplicacionMetodo();
+	}
+
+}
